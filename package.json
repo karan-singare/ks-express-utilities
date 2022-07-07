@@ -1,0 +1,27 @@
+{
+  "name": "ks-express-utilities",
+  "version": "1.0.0",
+  "description": "This is a collection of some classes and functions for the backend development using nodejs framework express.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karan-singare/ks-express-utilities.git"
+  },
+  "keywords": [
+    "Express",
+    "Utilities",
+    "NodeJS"
+  ],
+  "author": "karansingare@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karan-singare/ks-express-utilities/issues"
+  },
+  "homepage": "https://github.com/karan-singare/ks-express-utilities#readme"
+}
