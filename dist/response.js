@@ -40,4 +40,6 @@ class BadRequestResponse {
   }
 }
 
-export {Response, BadRequestResponse};
+
+// export {Response, BadRequestResponse};
+module.exports = {Response, BadRequestResponse};
