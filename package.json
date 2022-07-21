@@ -26,8 +26,10 @@
   "homepage": "https://github.com/karan-singare/ks-express-utilities#readme",
   "dependencies": {
     "axios": "^0.27.2",
+    "express-async-errors": "^3.1.1",
     "joi": "^17.6.0",
     "joi-objectid": "^4.0.2",
-    "mongoose": "^6.4.6"
+    "mongoose": "^6.4.6",
+    "winston": "^3.8.1"
   }
 }
