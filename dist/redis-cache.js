@@ -1,5 +1,5 @@
 const { Response } = require('./response');
-const { logger } = require('../init/logger');
+const { logger } = require('./logger');
 /**
  * @description - Class for caching the response
  * @param {object} req - request object

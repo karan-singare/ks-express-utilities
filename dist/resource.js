@@ -1,7 +1,7 @@
-const { Response, BadRequestResponse } = require('.response');
-const { isValidObjectId } = require('.object-id');
+const { Response, BadRequestResponse } = require('./response');
+const { isValidObjectId } = require('./object-id');
 const ObjectId = require('mongoose').Types.ObjectId;
-const { logger } = require('.logger');
+const { logger } = require('./logger');
 const axios = require('axios');
 /**
  * @class
