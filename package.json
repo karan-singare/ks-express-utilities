@@ -3,6 +3,7 @@
   "version": "1.0.3",
   "description": "This is a collection of some classes and functions for the backend development using nodejs framework express.",
   "main": "dist/index.js",
+  "type": "module",
   "directories": {
     "test": "test"
   },
