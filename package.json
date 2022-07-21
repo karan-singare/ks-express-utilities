@@ -1,6 +1,6 @@
 {
   "name": "ks-express-utilities",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "This is a collection of some classes and functions for the backend development using nodejs framework express.",
   "main": "dist/index.js",
   "directories": {
