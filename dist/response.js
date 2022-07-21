@@ -40,5 +40,4 @@ class BadRequestResponse {
   }
 }
 
-exports.Response = Response;
-exports.BadRequestResponse = BadRequestResponse;
+export {Response, BadRequestResponse};
