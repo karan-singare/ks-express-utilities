@@ -15,7 +15,7 @@ class Cache extends RedisCache {
    */
   constructor(req = null) {
     super(req);
-    this.appId = req.userData.wacId || req.body.appId;
+    this.appId = req.body.appId || req.userData.wacId;
     this.key = this.appId + req.originalUrl;
   }
   /**
