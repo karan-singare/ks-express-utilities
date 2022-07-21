@@ -509,6 +509,18 @@ class Resource {
     });
     return array;
   }
+  /**
+   * @description - sets the source of the data (redis/database to the response)
+   * @param {object} res - express res object
+   * @param {object} response - response to be sent
+   */
+  static setDataSourceHeader(res, response) {
+    if (response && response.cached) {
+      res.setHeader("X-Data-Source", "redis-cache");
+    } else {
+      res.setHeader("X-Data-Source", "database");
+    }
+  }
 
 }
 
