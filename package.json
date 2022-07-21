@@ -23,5 +23,11 @@
   "bugs": {
     "url": "https://github.com/karan-singare/ks-express-utilities/issues"
   },
-  "homepage": "https://github.com/karan-singare/ks-express-utilities#readme"
+  "homepage": "https://github.com/karan-singare/ks-express-utilities#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "joi": "^17.6.0",
+    "joi-objectid": "^4.0.2",
+    "mongoose": "^6.4.6"
+  }
 }

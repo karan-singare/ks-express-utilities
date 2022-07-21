@@ -1,9 +1,8 @@
-const { Response, BadRequestResponse } = require('./response');
-const { isValidObjectId } = require('../lib/object-id');
+const { Response, BadRequestResponse } = require('.response');
+const { isValidObjectId } = require('.object-id');
 const ObjectId = require('mongoose').Types.ObjectId;
-const { logger } = require('../init/logger');
+const { logger } = require('.logger');
 const axios = require('axios');
-
 /**
  * @class
  * @description - class for CRUD operations using mongoose
@@ -34,7 +33,6 @@ class Resource {
    * @param {object} payload - the object containing data to be saved
    */
   async create(payload) {
-    console.log(payload);
     return this.save(payload);
   }
 
@@ -57,9 +55,7 @@ class Resource {
           resolve(new BadRequestResponse(error.message));
         });
     });
-
   }
-
   /**
    * @description - method to get resource by id
    * @param {string} id - id of the resource
@@ -70,7 +66,6 @@ class Resource {
       status: { $in: [0, 1] }
     });
   }
-
   /**
    * @description - method to update document
    * @param {string} id - id of the resource
@@ -79,7 +74,6 @@ class Resource {
   async update(payload, id) {
     return this.save(payload, id);
   }
-
   /**
    * @description - method to update document
    * @param {object} filter - filter for bulk update
@@ -88,7 +82,6 @@ class Resource {
   async updateMany(filter, payload) {
     return this.save(payload, id);
   }
-
   /**
    * @description - method to create and save item in database
    * @param {string} id - id of the resource
@@ -118,7 +111,6 @@ class Resource {
   async activate(id) {
     return this.changeStatus(id, 1);
   }
-
   /**
    * @description - method to create and save item in database
    * @param {string} id - id of the resource
@@ -126,13 +118,11 @@ class Resource {
   async deactivate(id) {
     return this.changeStatus(id, 0);
   }
-
   /**
    * @description - method to get resource by filters
    * @param {object} filter - object containing filters for getting document
    */
   async getByFilter(filter) {
-
     return new Promise((resolve) => {
       this.schema.findOne(filter)
         .then((item) => {
@@ -143,7 +133,6 @@ class Resource {
         });
     });
   }
-
   /**
    * @description - method to get list of documents based on some filters
    * @param {object} filter - object containing filters for getting document
@@ -171,7 +160,6 @@ class Resource {
 
     });
   }
-
   /**
    * @description - method to get list of documents based on some filters
    * @param {array} ids - array of ids for which resources are needed
@@ -195,7 +183,6 @@ class Resource {
         });
     });
   }
-
   /**
    * @description - method to get list of documents based on some filters
    * @param {array} ids - array of encodeIds for which resources are needed
@@ -224,7 +211,6 @@ class Resource {
         });
     });
   }
-
   /**
    * @description - method to create and save item in database
    * @param {object} payload - the object containing data to be saved
@@ -282,7 +268,6 @@ class Resource {
     }
 
   }
-
   /**
    * @description - method to create and save item in database
    * @param {string} id - id of the resource
@@ -310,37 +295,7 @@ class Resource {
         resolve(new BadRequestResponse('invalid id'));
       });
     }
-
   }
-
-  /**
-   * @description - method to create and save item in database
-   * @param {string} id - encode id of the resource
-   */
-  async report(id) {
-    if (isValidObjectId(id)) {
-      return new Promise((resolve) => {
-        this.schema.updateOne(
-          {
-            encodeId: id,
-          },
-          { $set: { reported: true } },
-          { upsert: false, new: true, useFindAndModify: false }
-        )
-          .then(() => {
-            resolve(new Response(201, 'Video Reported Successfully!'));
-          })
-          .catch((error) => {
-            resolve(new BadRequestResponse(error.message));
-          });
-      });
-    } else {
-      return new Promise(resolve => {
-        resolve(new BadRequestResponse('invalid video id'));
-      });
-    }
-  }
-
   /**
    * @description - method to set a particular field of document
    * @param {string} id - id of the resource
@@ -377,7 +332,6 @@ class Resource {
         resolve(new BadRequestResponse('invalid id'));
       });
     }
-
   }
   /**
    * @description - method to get the values of particular keys from the document
@@ -427,7 +381,7 @@ class Resource {
     }
   }
   /**
-   * @description - method to get number of documents based on a fliter
+   * @description - method to get number of documents based on a filter
    * @param {object} filter - filter for the query
    */
   async getCount(filter) {
@@ -499,35 +453,6 @@ class Resource {
     });
   }
   /**
-   * @description - generate dummy data
-   * @param {number} limit - number of items to be created
-   * @param {[string]} ignoredFields - array of keys to be ignored
-   * @param {object} custom - array of keys to be ignored
-   */
-  async generateDummyData(ignoredFields, custom, limit = 10) {
-    const randomObjects = [];
-    for (let i = 0; i < limit; i++) {
-      randomObjects.push(dummy(
-        this.schema,
-        {
-          returnDate: true,
-          ignore: ignoredFields
-        }
-      ));
-    }
-
-    return new Promise((resolve) => {
-      this.schema.insertMany(randomObjects)
-        .then((items) => {
-          resolve(new Response(201, 'created', items));
-        })
-        .catch((error) => {
-          resolve(new BadRequestResponse(error.message));
-        });
-    });
-
-  }
-  /**
    * @description - the default validator for the payload
    * @return {array} - array of the fields of the resource schema
    */
@@ -540,7 +465,6 @@ class Resource {
     }
     return keys;
   }
-
   /**
    * @description - the default validator for the payload
    * @param {number} status - the payload object to be validated
@@ -585,52 +509,8 @@ class Resource {
     });
     return array;
   }
-  /**
-   * @description - adds video analytics such as views and viewTime to videos
-   * @param {array} drives - array of drive items
-   */
-  async addVideoAnalytics(drives) {
-    return new Promise(async (resolve) => {
-      try {
-        const videos = drives.filter(driveItem => driveItem.type === 'video');
-        const encodeIds = videos.map(video => video.encodeId);
-
-        const options = {
-          url: `${process.env.BASE_VIDEO_ANALYTIC_URL}bulkVideosData`,
-          method: 'post',
-          data: {
-            videos: encodeIds
-          },
-          headers: {
-            "Content-Type": "application/json",
-            "authorization": process.env.GLOBAL_JWT || 'global_jwt_fndsjkbgj23432fdfb',
-          }
-        };
-
-        const analyticsResponse = await axios(options);// [ {_id: string, views: number, viewTime:number} ]
-        const analytics = analyticsResponse.data.data;
-
-        analytics.forEach((video) => {
-          const driveItem = drives.find((driveItem) => video._id && driveItem.encodeId === video._id);
-          if (driveItem) {
-            driveItem.views = video.views;
-            driveItem.viewTime = video.viewTime;
-          }
-        });
-
-        resolve(drives);
-
-      } catch (err) {
-        resolve(false);
-        logger.error(err.message);
-        logger.error(`Error while adding video analytics stats to the videos`);
-      }
-
-    });
-
-  }
 
 }
 
-export {Resource};
+module.exports = {Resource};
 
