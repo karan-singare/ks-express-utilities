@@ -26,7 +26,7 @@ const logger = winston.createLogger({
       prettyPrint: true,
       level: 'info'
     }),
-    new winston.transports.File({ filename: 'channel.log', level: 'info' }),
+    new winston.transports.File({ filename: 'resource.log', level: 'info' }),
   ],
   exceptionHandlers: [
     new winston.transports.File({ filename: 'exceptions.log' }),
