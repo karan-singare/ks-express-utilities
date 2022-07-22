@@ -143,11 +143,7 @@ class Resource {
   async getAllByFilter(filter, pageSize, pageNum, sortFilter) {
     return new Promise((resolve) => {
       this.schema
-        .find({
-          status: { $in: [0, 1] },
-          appId: this.appId,
-          ...filter
-        })
+        .find(filter)
         .skip(pageNum * pageSize)
         .limit(pageSize)
         .sort(sortFilter)
