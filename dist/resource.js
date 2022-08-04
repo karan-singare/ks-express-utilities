@@ -382,11 +382,7 @@ class Resource {
    */
   async getCount(filter) {
     return new Promise((resolve) => {
-      this.schema.count({
-        status: { $in: [0, 1] },
-        appId: this.appId,
-        ...filter,
-      })
+      this.schema.count(filter)
         .then((num) => {
           resolve(num);
         })
